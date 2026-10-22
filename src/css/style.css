@@ -206,82 +206,74 @@ body {
 }
 
 /* ============================================================================
-   5. VISOR DE CANCIÓN Y ALINEACIÓN DE ACORDES (CHORDPRO)
+   5. VISOR DE CANCIÓN Y ACORDES CHORDPRO (ESTABLE Y EXACTO)
    ============================================================================ */
 .song-card {
   background: var(--card-bg);
   padding: 32px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
   font-family: monospace;
   font-size: 16px;
   line-height: 1.6;
-  overflow-x: auto;                  /* Permite scroll horizontal fluido en teléfonos */
-  -webkit-overflow-scrolling: touch;  /* Desplazamiento inercial suave en iOS/Android */
+  overflow-x: auto;                  /* Scroll horizontal fluido en pantallas pequeñas */
+  -webkit-overflow-scrolling: touch;
   max-width: 100%;
 }
 
-/* Renglón continuo de estrofa */
-.chord-line-container,
-.line,
-.chord-line,
-.row {
+.chord-line-container, .line, .chord-line, .row {
   display: flex;
-  flex-wrap: nowrap;                 /* CLAVE: Evita que las frases se rompan en varios renglones */
+  flex-wrap: nowrap !important;      /* Mantiene toda la línea de canto unida sin romper palabras */
   align-items: flex-end;
-  margin-bottom: 8px;
-  width: max-content;
+  margin-bottom: 10px;
+  width: max-content;                /* Respeta el ancho continuo del renglón */
   min-width: 100%;
 }
 
-/* Bloque columna unitario (Acorde arriba + Sílaba abajo) */
-.pair,
-.chord-lyric-pair,
-.chord-lyrics-pair {
+.pair, .chord-lyric-pair, .chord-lyrics-pair {
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: column;            /* Apila el acorde justo arriba de su sílaba */
   align-items: flex-start;
   vertical-align: bottom;
-  margin-right: 1px;
-  white-space: pre;                   /* Mantiene la distancia estricta de espacios */
+  margin-right: 2px;
+  white-space: pre;
 }
 
-.lyric,
-.plain-text,
-.lyrics {
-  font-size: 1rem;
-  line-height: 1.2;
-  white-space: pre;                   /* Protege contra partir palabras en sílabas */
+.lyric, .plain-text, .lyrics { 
+  font-size: 1rem; 
+  line-height: 1.2; 
+  white-space: pre; 
   display: inline;
 }
 
-.chorus {
-  border-left: 3px solid var(--primary);
-  padding-left: 12px;
-  margin-left: 4px;
+.chorus { 
+  border-left: 3px solid var(--primary); 
+  padding-left: 12px; 
+  margin-left: 4px; 
 }
 
-/* ETIQUETA DEL ACORDE (ANCLAJE DE TOOLTIP) */
+/* ETIQUETA DE ACORDE */
 .chord {
-  position: relative;                 /* CLAVE: Ancla la caja flotante del diagrama directamente al acorde */
+  position: relative;
   display: inline-block;
   cursor: pointer;
   color: var(--chord) !important;
   font-weight: bold;
-  height: 1.2em;
-  line-height: 1.2em;
-  vertical-align: bottom;
-  -webkit-tap-highlight-color: transparent; /* Quita el recuadro gris al tocar en celulares */
+  font-size: 0.85em;
+  line-height: 1.2;
+  margin-bottom: 2px;                /* Espaciado natural y cercano con la letra */
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ============================================================================
-   6. TOOLTIP DE DIAGRAMAS SVG (INTERACCIÓN ESCRITORIO Y TÁCTIL)
+   6. TOOLTIP CON DIAGRAMA DEL INSTRUMENTO
    ============================================================================ */
 .chord-tooltip {
   display: none;
   position: absolute;
-  bottom: 130%;
+  bottom: 140%;
   left: 50%;
   transform: translateX(-50%);
   background: #ffffff;
@@ -294,10 +286,10 @@ body {
   white-space: normal;
   width: 110px;
   min-height: 120px;
-  pointer-events: none;               /* Evita que el tooltip bloquee la pantalla al tocar */
+  pointer-events: none;
 }
 
-/* Visualización en paso de ratón (hover) o toque con el dedo (active/touch) */
+/* Muestra el tooltip al pasar el ratón o al tocar la pantalla táctil */
 .chord:hover .chord-tooltip,
 .chord:active .chord-tooltip,
 .chord:focus .chord-tooltip,
@@ -311,7 +303,7 @@ body {
   height: 100px;
 }
 
-.chord-canvas-box svg,
+.chord-canvas-box svg, 
 .chord-tooltip svg {
   display: block;
   width: 100% !important;
