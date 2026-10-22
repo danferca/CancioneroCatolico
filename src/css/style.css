@@ -195,7 +195,7 @@ body {
 }
 
 /* ============================================================================
-   5. VISOR DE CANCIÓN Y ACORDES CHORDPRO (ESTRUCTURA LIMPIA Y COMPACTA)
+   5. VISOR DE CANCIÓN Y ACORDES CHORDPRO (CORRECCIÓN TÁCTIL DE ACORDES)
    ============================================================================ */
 .song-card {
   background: var(--card-bg);
@@ -206,12 +206,11 @@ body {
   font-family: monospace;
   font-size: 15px;
   line-height: 1.5;
-  overflow-x: auto;                  /* Scroll horizontal suave si el renglón es muy largo */
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   max-width: 100%;
 }
 
-/* Contenedor del renglón continuo */
 .chord-line-container,
 .line,
 .chord-line,
@@ -224,30 +223,35 @@ body {
   min-width: 100%;
 }
 
-/* Cada bloque par: apila el acorde arriba y la letra abajo de forma natural */
 .pair,
 .chord-lyric-pair,
 .chord-lyrics-pair {
   display: inline-flex;
-  flex-direction: column;    /* Apila verticalmente sin separar los textos horizontalmente */
+  flex-direction: column;
   align-items: flex-start;
   vertical-align: bottom;
   white-space: pre;
   margin-right: 2px;
 }
 
-/* Etiqueta del acorde (Justo arriba, con un margen mínimo controlado) */
+/* ETIQUETA DE ACORDE - Optimizada para interacción táctil */
 .chord {
-  display: block;
+  position: relative;          /* Mantiene el flujo natural sin separar demasiado */
+  display: inline-block;
+  cursor: pointer;
   color: var(--chord) !important;
   font-weight: bold;
   font-size: 0.85em;
   line-height: 1;
-  margin-bottom: 2px;        /* Distancia exacta entre el acorde y la letra (cercano y natural) */
+  margin-bottom: 2px;
   white-space: nowrap;
+  padding: 2px 4px;            /* Área táctil más amplia para el dedo en el celular */
+  margin-left: -4px;           /* Compensa el padding para no desplazar el texto */
+  border-radius: 4px;
+  -webkit-tap-highlight-color: transparent; /* Elimina el recuadro gris molesto al tocar en Android/iOS */
 }
 
-/* Texto de la letra abajo del acorde */
+/* Texto de la letra */
 .lyric,
 .plain-text,
 .lyrics {
@@ -263,11 +267,13 @@ body {
   margin-left: 2px;
 }
 
-/* 6. TOOLTIP CON DIAGRAMA DEL INSTRUMENTO */
+/* ============================================================================
+   6. TOOLTIP CON DIAGRAMA DEL INSTRUMENTO
+   ============================================================================ */
 .chord-tooltip {
   display: none;
   position: absolute;
-  bottom: 130%;
+  bottom: 140%;
   left: 50%;
   transform: translateX(-50%);
   background: #ffffff;
@@ -280,9 +286,13 @@ body {
   white-space: normal;
   width: 110px;
   min-height: 120px;
+  pointer-events: none;        /* Evita que el tooltip interfiera con el toque */
 }
 
-.chord:hover .chord-tooltip {
+/* Muestra el tooltip tanto al pasar el ratón como al hacer toque/activo en móviles */
+.chord:hover .chord-tooltip,
+.chord:active .chord-tooltip,
+.chord:focus .chord-tooltip {
   display: block;
 }
 
