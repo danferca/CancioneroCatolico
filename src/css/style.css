@@ -1,31 +1,63 @@
+/**
+ * ============================================================================
+ * CANCIONERO CATÓLICO - HOJA DE ESTILOS PRINCIPAL (STYLE.CSS)
+ * ============================================================================
+ * Arquitectura modular y optimizada para la lectura móvil de partituras ChordPro,
+ * transposición de tonos y renderizado interactivo de diagramas de acordes.
+ */
+
+/* ============================================================================
+   1. VARIABLES GLOBALES Y CONFIGURACIÓN BASE
+   ============================================================================ */
 :root {
-  --primary: #2563eb;
-  --bg: #f8fafc;
-  --card-bg: #ffffff;
-  --text: #1e293b;
-  --text-muted: #64748b;
-  --chord: #d97706; /* Naranja original */
-  --border: #e2e8f0;
+  --primary: #2563eb;       /* Azul principal para botones e interacción */
+  --bg: #f8fafc;            /* Fondo suave para descanso visual */
+  --card-bg: #ffffff;       /* Fondo blanco para tarjetas y estrofas */
+  --text: #1e293b;          /* Color principal de letra de alta legibilidad */
+  --text-muted: #64748b;    /* Subtítulos y metadatos secundarios */
+  --chord: #d97706;         /* Tono naranja distintivo para acordes */
+  --border: #e2e8f0;        /* Bordes ligeros para delimitación */
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: var(--bg);
   color: var(--text);
   margin: 0;
   padding: 20px 16px;
 }
 
-.container { max-width: 850px; margin: 0 auto; }
-.hidden { display: none !important; }
+.container {
+  max-width: 850px;
+  margin: 0 auto;
+}
 
-/* ENCABEZADO Y BÚSQUEDA */
-.app-header h1 { margin: 0 0 4px; font-size: 1.75rem; }
-.app-header p { margin: 0 0 20px; color: var(--text-muted); font-size: 0.95rem; }
+.hidden {
+  display: none !important;
+}
 
-.search-container { margin-bottom: 24px; }
+/* ============================================================================
+   2. ENCABEZADO PRINCIPAL Y BÚSQUEDA
+   ============================================================================ */
+.app-header h1 {
+  margin: 0 0 4px;
+  font-size: 1.75rem;
+}
+
+.app-header p {
+  margin: 0 0 20px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.search-container {
+  margin-bottom: 24px;
+}
+
 #searchBox {
   width: 100%;
   padding: 12px 16px;
@@ -33,17 +65,28 @@ body {
   border-radius: 10px;
   font-size: 15px;
   outline: none;
+  transition: border-color 0.2s ease;
 }
-#searchBox:focus { border-color: var(--primary); }
 
-/* SECCIONES LITÚRGICAS Y TARJETAS DE CANCIONES */
+#searchBox:focus {
+  border-color: var(--primary);
+}
+
+/* ============================================================================
+   3. SECCIONES LITÚRGICAS Y REJILLA DE CANCIONES
+   ============================================================================ */
 .section-header {
   grid-column: 1 / -1;
   margin: 20px 0 8px;
   border-bottom: 2px solid var(--border);
   padding-bottom: 6px;
 }
-.section-header h3 { font-size: 1.1rem; margin: 0; letter-spacing: 0.5px; }
+
+.section-header h3 {
+  font-size: 1.1rem;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
 
 .momento-group {
   grid-column: 1 / -1;
@@ -64,13 +107,24 @@ body {
   cursor: pointer;
   transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
+
 .song-item:hover {
   border-color: var(--primary);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
 }
-.song-info h3 { margin: 0 0 4px; color: var(--primary); font-size: 1.1rem; }
-.song-info p { margin: 0; color: var(--text-muted); font-size: 0.85rem; }
+
+.song-info h3 {
+  margin: 0 0 4px;
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.song-info p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
 
 .key-badge {
   background: #f1f5f9;
@@ -83,7 +137,9 @@ body {
   border: 1px solid #cbd5e1;
 }
 
-/* NAVEGACIÓN Y CONTROLES DE TRANSPOSICIÓN */
+/* ============================================================================
+   4. NAVEGACIÓN Y BARRA DE TRANSPOSICIÓN
+   ============================================================================ */
 .top-nav {
   display: flex;
   justify-content: space-between;
@@ -97,20 +153,48 @@ body {
   gap: 12px;
 }
 
-.btn-back, .transpose-controls button {
+.btn-back,
+.transpose-controls button {
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
+  transition: background-color 0.2s ease;
 }
-.btn-back { background: #e2e8f0; color: var(--text); padding: 8px 14px; font-size: 14px; white-space: nowrap; }
-.btn-back:hover { background: #cbd5e1; }
 
-.transpose-controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.transpose-controls button { background: var(--primary); color: #fff; padding: 6px 12px; }
-#transposeVal { margin: 0 4px; font-weight: bold; min-width: 16px; text-align: center; }
+.btn-back {
+  background: #e2e8f0;
+  color: var(--text);
+  padding: 8px 14px;
+  font-size: 14px;
+  white-space: nowrap;
+}
 
-/* Botón Original / Restablecer */
+.btn-back:hover {
+  background: #cbd5e1;
+}
+
+.transpose-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.transpose-controls button {
+  background: var(--primary);
+  color: #fff;
+  padding: 6px 12px;
+}
+
+#transposeVal {
+  margin: 0 4px;
+  font-weight: bold;
+  min-width: 16px;
+  text-align: center;
+}
+
+/* Botón Restablecer Tono Original */
 .btn-reset {
   background: #64748b !important;
   color: #fff !important;
@@ -121,50 +205,66 @@ body {
   background: var(--primary) !important;
 }
 
-/* VISOR DE CANCIÓN Y ACORDES CHORDPRO */
+/* ============================================================================
+   5. VISOR DE CANCIÓN Y ALINEACIÓN DE ACORDES (CHORDPRO)
+   ============================================================================ */
 .song-card {
   background: var(--card-bg);
   padding: 32px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
   font-family: monospace;
   font-size: 16px;
   line-height: 1.6;
-  overflow-x: visible;
+  overflow-x: auto;                  /* Permite scroll horizontal fluido en teléfonos */
+  -webkit-overflow-scrolling: touch;  /* Desplazamiento inercial suave en iOS/Android */
+  max-width: 100%;
 }
 
-.chord-line-container, .line, .chord-line, .row {
+/* Renglón continuo de estrofa */
+.chord-line-container,
+.line,
+.chord-line,
+.row {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;                 /* CLAVE: Evita que las frases se rompan en varios renglones */
   align-items: flex-end;
   margin-bottom: 8px;
+  width: max-content;
+  min-width: 100%;
 }
 
-.pair, .chord-lyric-pair, .chord-lyrics-pair {
+/* Bloque columna unitario (Acorde arriba + Sílaba abajo) */
+.pair,
+.chord-lyric-pair,
+.chord-lyrics-pair {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
   vertical-align: bottom;
   margin-right: 1px;
+  white-space: pre;                   /* Mantiene la distancia estricta de espacios */
 }
 
-.lyric, .plain-text, .lyrics { 
-  font-size: 1rem; 
-  line-height: 1.2; 
-  white-space: pre; 
+.lyric,
+.plain-text,
+.lyrics {
+  font-size: 1rem;
+  line-height: 1.2;
+  white-space: pre;                   /* Protege contra partir palabras en sílabas */
   display: inline;
 }
 
-.chorus { 
-  border-left: 3px solid var(--primary); 
-  padding-left: 12px; 
-  margin-left: 4px; 
+.chorus {
+  border-left: 3px solid var(--primary);
+  padding-left: 12px;
+  margin-left: 4px;
 }
 
-/* ETIQUETA DE ACORDE */
+/* ETIQUETA DEL ACORDE (ANCLAJE DE TOOLTIP) */
 .chord {
-  position: relative;
+  position: relative;                 /* CLAVE: Ancla la caja flotante del diagrama directamente al acorde */
   display: inline-block;
   cursor: pointer;
   color: var(--chord) !important;
@@ -172,9 +272,12 @@ body {
   height: 1.2em;
   line-height: 1.2em;
   vertical-align: bottom;
+  -webkit-tap-highlight-color: transparent; /* Quita el recuadro gris al tocar en celulares */
 }
 
-/* TOOLTIP CON DIAGRAMA DEL INSTRUMENTO */
+/* ============================================================================
+   6. TOOLTIP DE DIAGRAMAS SVG (INTERACCIÓN ESCRITORIO Y TÁCTIL)
+   ============================================================================ */
 .chord-tooltip {
   display: none;
   position: absolute;
@@ -191,10 +294,15 @@ body {
   white-space: normal;
   width: 110px;
   min-height: 120px;
+  pointer-events: none;               /* Evita que el tooltip bloquee la pantalla al tocar */
 }
 
-.chord:hover .chord-tooltip {
-  display: block;
+/* Visualización en paso de ratón (hover) o toque con el dedo (active/touch) */
+.chord:hover .chord-tooltip,
+.chord:active .chord-tooltip,
+.chord:focus .chord-tooltip,
+.chord.active .chord-tooltip {
+  display: block !important;
 }
 
 .chord-canvas-box {
@@ -203,18 +311,42 @@ body {
   height: 100px;
 }
 
-.chord-canvas-box svg, .chord-tooltip svg {
+.chord-canvas-box svg,
+.chord-tooltip svg {
   display: block;
   width: 100% !important;
   height: auto !important;
   margin: 0 auto;
 }
 
-/* VISTA MÓVIL */
+/* ============================================================================
+   7. ADAPTABILIDAD MÓVIL Y DISPOSITIVOS PEQUEÑOS (RESPONSIVE)
+   ============================================================================ */
 @media (max-width: 600px) {
-  .song-card { padding: 16px 12px; font-size: 13.5px; }
-  .top-nav { flex-direction: column; align-items: stretch; }
-  .btn-back { width: 100%; text-align: center; padding: 10px; }
-  .transpose-controls { justify-content: space-between; width: 100%; }
-  .transpose-controls button { flex: 1; padding: 8px 4px; font-size: 13px; }
+  .song-card {
+    padding: 16px 12px;
+    font-size: 13.5px;
+  }
+
+  .top-nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-back {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .transpose-controls {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .transpose-controls button {
+    flex: 1;
+    padding: 8px 4px;
+    font-size: 13px;
+  }
 }
