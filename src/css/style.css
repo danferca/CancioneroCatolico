@@ -138,74 +138,77 @@ body {
 }
 
 /* ============================================================================
-   4. NAVEGACIÓN Y BARRA DE TRANSPOSICIÓN (CONTROLES COMPACTOS)
+   4. NAVEGACIÓN Y BARRA DE TRANSPOSICIÓN (COMPACTOS Y EN LÍNEA)
    ============================================================================ */
 .top-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: var(--card-bg);
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: 10px;
   border: 1px solid var(--border);
   margin-bottom: 16px;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-.btn-back,
-.transpose-controls button {
+/* Botón de Volver compacto y sin ocupar todo el ancho */
+.btn-back {
+  background: #e2e8f0;
+  color: var(--text);
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  transition: background-color 0.2s ease;
-  font-size: 13.5px;
-  line-height: 1.2;
-}
-
-.btn-back {
-  background: #e2e8f0;
-  color: var(--text);
-  padding: 8px 14px;
+  padding: 6px 10px;
+  font-size: 13px;
   white-space: nowrap;
+  width: auto !important;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
 }
 
 .btn-back:hover {
   background: #cbd5e1;
 }
 
+/* Controles de transposición estilizados */
 .transpose-controls {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
-/* Botones + y - compactos */
-.transpose-controls button {
+.transpose-controls button,
+.btn-reset {
   background: var(--primary);
   color: #fff;
-  padding: 6px 12px;
-  min-width: 34px;                    /* Le da una proporción cuadrada/fija idéntica a 1080p */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 5px 10px;
+  font-size: 13px;
   height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.2s ease;
 }
 
 #transposeVal {
   margin: 0 4px;
   font-weight: bold;
-  min-width: 18px;
+  min-width: 16px;
   text-align: center;
+  font-size: 13px;
 }
 
 /* Botón Restablecer Tono Original */
 .btn-reset {
   background: #64748b !important;
-  color: #fff !important;
-  padding: 6px 12px !important;
-  height: 32px;
 }
 
 .btn-reset.is-original {
@@ -328,7 +331,7 @@ body {
 }
 
 /* ============================================================================
-   7. ADAPTABILIDAD MÓVIL Y DISPOSITIVOS PEQUEÑOS (RESPONSIVE COMPACTO)
+   7. ADAPTABILIDAD MÓVIL Y DISPOSITIVOS PEQUEÑOS (RESPONSIVE LIMPIO)
    ============================================================================ */
 @media (max-width: 600px) {
   .song-card {
@@ -337,29 +340,19 @@ body {
   }
 
   .top-nav {
-    flex-direction: row !important;       /* Mantiene los controles en horizontal en el celular */
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 12px;
+    padding: 8px 10px;
+    gap: 6px;
   }
 
   .btn-back {
-    width: auto !important;               /* Evita que ocupe el 100% del ancho */
-    padding: 8px 12px;
-    font-size: 13px;
+    padding: 5px 8px;
+    font-size: 12px;
   }
 
-  .transpose-controls {
-    justify-content: flex-end;
-    width: auto !important;               /* Mantiene el bloque agrupado como en PC */
-    gap: 4px;
-  }
-
-  .transpose-controls button {
-    flex: none !important;                 /* Cancela la expansión del botón */
-    padding: 6px 10px !important;
-    min-width: 32px;
+  .transpose-controls button,
+  .btn-reset {
+    padding: 4px 8px !important;
+    font-size: 12px;
     height: 30px;
-    font-size: 13px;
   }
 }
