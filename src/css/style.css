@@ -206,65 +206,68 @@ body {
 }
 
 /* ============================================================================
-   5. VISOR DE CANCIÓN Y ACORDES CHORDPRO (ESTABLE Y EXACTO)
+   5. VISOR DE CANCIÓN Y ACORDES CHORDPRO (DEFINITIVO PARA SCROLL HORIZONTAL)
    ============================================================================ */
 .song-card {
   background: var(--card-bg);
-  padding: 32px;
+  padding: 24px 16px;
   border-radius: 10px;
   border: 1px solid var(--border);
   box-shadow: 0 2px 4px rgba(0,0,0,0.03);
   font-family: monospace;
-  font-size: 16px;
-  line-height: 1.6;
-  overflow-x: auto;                  /* Scroll horizontal fluido en pantallas pequeñas */
+  font-size: 15px;
+  line-height: 1.5;
+  overflow-x: auto;                  /* Habilita el scroll horizontal fluido */
   -webkit-overflow-scrolling: touch;
-  max-width: 100%;
+  width: 100%;                       /* Ocupa todo el ancho disponible sin recortar */
+  box-sizing: border-box;
 }
 
+/* Renglón continuo de la canción */
 .chord-line-container, .line, .chord-line, .row {
   display: flex;
-  flex-wrap: nowrap !important;      /* Mantiene toda la línea de canto unida sin romper palabras */
+  flex-wrap: nowrap !important;      /* Impide que el renglón se parta en varios pedazos */
   align-items: flex-end;
-  margin-bottom: 10px;
-  width: max-content;                /* Respeta el ancho continuo del renglón */
-  min-width: 100%;
+  margin-bottom: 14px;
+  width: max-content;                /* Se expande libremente según lo largo del verso */
 }
 
+/* Bloque columna unitario (Acorde arriba + Sílaba abajo) */
 .pair, .chord-lyric-pair, .chord-lyrics-pair {
   display: inline-flex;
-  flex-direction: column;            /* Apila el acorde justo arriba de su sílaba */
+  flex-direction: column;            /* Apila el acorde verticalmente sobre la sílaba */
   align-items: flex-start;
   vertical-align: bottom;
   margin-right: 2px;
   white-space: pre;
 }
 
+/* Etiqueta del acorde */
+.chord {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  color: var(--chord) !important;
+  font-weight: bold;
+  font-size: 0.85em;
+  line-height: 1.2;
+  margin-bottom: 2px;                /* Distancia perfecta y natural con la letra */
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Texto de la letra */
 .lyric, .plain-text, .lyrics { 
   font-size: 1rem; 
   line-height: 1.2; 
   white-space: pre; 
-  display: inline;
+  display: block;
 }
 
 .chorus { 
   border-left: 3px solid var(--primary); 
   padding-left: 12px; 
   margin-left: 4px; 
-}
-
-/* ETIQUETA DE ACORDE */
-.chord {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  color: var(--chord) !important;
-  font-weight: bold;
-  font-size: 0.85em;
-  line-height: 1.2;
-  margin-bottom: 2px;                /* Espaciado natural y cercano con la letra */
-  white-space: nowrap;
-  -webkit-tap-highlight-color: transparent;
 }
 
 /* ============================================================================
