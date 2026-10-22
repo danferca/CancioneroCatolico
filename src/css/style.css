@@ -206,7 +206,7 @@ body {
 }
 
 /* ============================================================================
-   5. VISOR DE CANCIÓN Y ACORDES CHORDPRO (DEFINITIVO PARA SCROLL HORIZONTAL)
+   5. VISOR DE CANCIÓN Y ACORDES CHORDPRO (LÍNEA CONTINUA Y SCROLL HORIZONTAL)
    ============================================================================ */
 .song-card {
   background: var(--card-bg);
@@ -219,27 +219,27 @@ body {
   line-height: 1.5;
   overflow-x: auto;                  /* Habilita el scroll horizontal fluido */
   -webkit-overflow-scrolling: touch;
-  width: 100%;                       /* Ocupa todo el ancho disponible sin recortar */
+  width: 100%;
   box-sizing: border-box;
 }
 
-/* Renglón continuo de la canción */
+/* Renglón continuo de la canción (PROHIBIDO que salte de línea) */
 .chord-line-container, .line, .chord-line, .row {
-  display: flex;
-  flex-wrap: nowrap !important;      /* Impide que el renglón se parta en varios pedazos */
+  display: flex !important;
+  flex-wrap: nowrap !important;      /* Evita por completo que el verso se rompa en dos renglones */
   align-items: flex-end;
   margin-bottom: 14px;
-  width: max-content;                /* Se expande libremente según lo largo del verso */
+  width: max-content !important;     /* Se expande horizontalmente de forma libre y continua */
 }
 
 /* Bloque columna unitario (Acorde arriba + Sílaba abajo) */
 .pair, .chord-lyric-pair, .chord-lyrics-pair {
   display: inline-flex;
-  flex-direction: column;            /* Apila el acorde verticalmente sobre la sílaba */
+  flex-direction: column;            /* Apila el acorde verticalmente sobre su sílaba */
   align-items: flex-start;
   vertical-align: bottom;
   margin-right: 2px;
-  white-space: pre;
+  white-space: pre;                  /* Mantiene los espacios originales del ChordPro */
 }
 
 /* Etiqueta del acorde */
