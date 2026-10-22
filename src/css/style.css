@@ -138,7 +138,7 @@ body {
 }
 
 /* ============================================================================
-   4. NAVEGACIÓN Y BARRA DE TRANSPOSICIÓN (MÁS COMPACTA Y ESTILIZADA)
+   4. NAVEGACIÓN Y BARRA DE TRANSPOSICIÓN (CONTROLES COMPACTOS)
    ============================================================================ */
 .top-nav {
   display: flex;
@@ -149,8 +149,8 @@ body {
   border-radius: 10px;
   border: 1px solid var(--border);
   margin-bottom: 16px;
-  flex-wrap: wrap;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .btn-back,
@@ -160,13 +160,14 @@ body {
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.2s ease;
+  font-size: 13.5px;
+  line-height: 1.2;
 }
 
 .btn-back {
   background: #e2e8f0;
   color: var(--text);
-  padding: 6px 12px;
-  font-size: 13.5px;
+  padding: 8px 14px;
   white-space: nowrap;
 }
 
@@ -178,20 +179,24 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  flex-wrap: wrap;
 }
 
+/* Botones + y - compactos */
 .transpose-controls button {
   background: var(--primary);
   color: #fff;
   padding: 6px 12px;
-  font-size: 14px;
+  min-width: 34px;                    /* Le da una proporción cuadrada/fija idéntica a 1080p */
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #transposeVal {
   margin: 0 4px;
   font-weight: bold;
-  min-width: 16px;
+  min-width: 18px;
   text-align: center;
 }
 
@@ -199,7 +204,8 @@ body {
 .btn-reset {
   background: #64748b !important;
   color: #fff !important;
-  border: none;
+  padding: 6px 12px !important;
+  height: 32px;
 }
 
 .btn-reset.is-original {
@@ -322,7 +328,7 @@ body {
 }
 
 /* ============================================================================
-   7. ADAPTABILIDAD MÓVIL Y DISPOSITIVOS PEQUEÑOS (RESPONSIVE)
+   7. ADAPTABILIDAD MÓVIL Y DISPOSITIVOS PEQUEÑOS (RESPONSIVE COMPACTO)
    ============================================================================ */
 @media (max-width: 600px) {
   .song-card {
@@ -331,24 +337,29 @@ body {
   }
 
   .top-nav {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row !important;       /* Mantiene los controles en horizontal en el celular */
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
   }
 
   .btn-back {
-    width: 100%;
-    text-align: center;
-    padding: 10px;
+    width: auto !important;               /* Evita que ocupe el 100% del ancho */
+    padding: 8px 12px;
+    font-size: 13px;
   }
 
   .transpose-controls {
-    justify-content: space-between;
-    width: 100%;
+    justify-content: flex-end;
+    width: auto !important;               /* Mantiene el bloque agrupado como en PC */
+    gap: 4px;
   }
 
   .transpose-controls button {
-    flex: 1;
-    padding: 8px 4px;
+    flex: none !important;                 /* Cancela la expansión del botón */
+    padding: 6px 10px !important;
+    min-width: 32px;
+    height: 30px;
     font-size: 13px;
   }
 }
