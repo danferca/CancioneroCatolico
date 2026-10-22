@@ -1,0 +1,20 @@
+{
+  "instrument": "guitar",
+  "instruments": {
+    "guitar": {
+      "strings": 6,
+      "frets": 5,
+      "tuning": ["E", "A", "D", "G", "B", "E"]
+    },
+    "ukulele": {
+      "strings": 4,
+      "frets": 5,
+      "tuning": ["G", "C", "E", "A"]
+    }
+  },
+  "view": {
+    "theme": "light",
+    "showTooltips": true,
+    "defaultTranspose": 0
+  }
+}

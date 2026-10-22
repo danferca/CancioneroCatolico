@@ -1,0 +1,1 @@
+let rawText="",semitones=0,originalKey="C",songMetadata={},songsData=[];const notes=["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];window.appConfig={instrument:"guitar",instruments:{guitar:{strings:6,tuning:["E","A","D","G","B","E"]},ukulele:{strings:4,tuning:["G","C","E","A"]}}};

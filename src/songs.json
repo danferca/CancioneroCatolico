@@ -1,0 +1,128 @@
+[
+  {
+    "file": "fiesta_del_banquete.cho",
+    "title": "Fiesta del Banquete",
+    "artist": "D.R.A.",
+    "key": "Dm",
+    "momento": "Entrada"
+  },
+  {
+    "file": "jesus_es.cho",
+    "title": "Jesús es",
+    "artist": "D.R.A.",
+    "key": "C",
+    "momento": "Comunión"
+  },
+  {
+  "title": "Ahora Mismo",
+  "artist": "D.R.A.",
+  "momento": "Entrada",
+  "key": "E",
+  "file": "ahora_mismo.cho"
+},
+{
+  "title": "Aclamad a Dios",
+  "artist": "Ministerio Sembradores",
+  "momento": "Entrada / Alabanza",
+  "key": "Em",
+  "file": "aclamad_a_dios.cho"
+},
+{
+  "title": "A que tú te vas",
+  "artist": "D.R.A.",
+  "momento": "Alabanza / Salida",
+  "key": "E",
+  "file": "a_que_tu_te_vas.cho"
+},
+{
+  "title": "Abre mis labios",
+  "artist": "D.R.A.",
+  "momento": "Aclamación / Oración",
+  "key": "D",
+  "file": "abre_mis_labios.cho"
+},
+{
+  "title": "Alabaré al Señor",
+  "artist": "D.R.A.",
+  "momento": "Alabanza / Entrada",
+  "key": "G",
+  "file": "alabare_al_senor.cho"
+},
+{
+  "title": "Aleluya al Señor",
+  "artist": "D.R.A.",
+  "momento": "Aleluya",
+  "key": "C",
+  "file": "aleluya_al_senor.cho"
+},
+{
+  "title": "Ave María",
+  "artist": "D.R.A.",
+  "momento": "Salida / María",
+  "key": "Dm",
+  "file": "ave_maria.cho"
+},
+{
+  "title": "Bienvenido",
+  "artist": "D.R.A.",
+  "momento": "Entrada / Acogida",
+  "key": "C#m",
+  "file": "bienvenido.cho"
+},
+{
+  "title": "No hay Dios",
+  "artist": "D.R.A.",
+  "momento": "Entrada / Alabanza / Animación",
+  "key": "E",
+  "file": "no_hay_dios.cho"
+},
+{
+  "title": "Es un río",
+  "artist": "D.R.A.",
+  "momento":  "Entrada / Alabanza / Animación",
+  "key": "E",
+  "file": "es_un_rio.cho"
+},
+{
+  "title": "El Espíritu Santo ya llegó",
+  "artist": "D.R.A.",
+  "momento": "Entrada / Alabanza / Animación",
+  "key": "E",
+  "file": "el_espiritu_santo_ya_llego.cho"
+},
+{
+  "title": "Ten piedad soy pecador",
+  "artist": "D.R.A.",
+  "momento": "Piedad",
+  "key": "Am",
+  "file": "ten_piedad_soy_pecador.cho"
+},
+{
+  "title": "Ale, ale, ale.",
+  "artist": "D.R.A.",
+  "momento": "Aleluya / Aclamación",
+  "key": "G",
+  "file": "ale_ale_ale.cho"
+},
+{
+  "title": "El rey de mi vida",
+  "artist": "Joan Sanchez & Río Poderoso",
+  "momento": "Comunión / Adoración",
+  "key": "G",
+  "file": "el_rey_de_mi_vida.cho"
+},
+{
+  "title": "Ay mira que lindo",
+  "artist": "D.R.A",
+  "momento": "Entrada / Alabanza /",
+  "key": "Am",
+  "file": "ay_mira_que_lindo.cho"
+},
+{
+  "title": "Ven Espíritu",
+  "artist": "D.R.A",
+  "momento": "Entrada / Alabanza",
+  "key": "Am",
+  "file": "ven_espiritu.cho"
+}
+]
