@@ -1,5 +1,16 @@
-// ui.js - Control de la interfaz de usuario, configuración y navegación
+// ============================================================================
+// ui.js - Control de Interfaz, Configuración, Navegación y Eventos Táctiles
+// ============================================================================
 
+// Inicializar al cargar la página y configurar los eventos táctiles globales
+document.addEventListener('DOMContentLoaded', () => {
+  inicializarCancionero();
+  initChordTouchEvents();
+});
+
+/**
+ * Carga la configuración inicial desde config.json y el índice de canciones desde songs.json.
+ */
 async function inicializarCancionero() {
   try {
     const configRes = await fetch("config.json");
@@ -7,12 +18,10 @@ async function inicializarCancionero() {
       window.appConfig = await configRes.json();
     }
 
-    // --- AGREGAR / ASEGURAR ESTAS LÍNEAS ---
-    const selectInstrumento = document.getElementById("instrumentSelect"); // Ajusta el ID al que tengas en tu index.html
+    const selectInstrumento = document.getElementById("instrumentSelect");
     if (selectInstrumento && window.appConfig && window.appConfig.instrument) {
       selectInstrumento.value = window.appConfig.instrument;
     }
-    // ---------------------------------------
 
     const res = await fetch("songs.json");
     if (!res.ok) throw new Error("No se pudo cargar songs.json");
@@ -26,6 +35,9 @@ async function inicializarCancionero() {
   }
 }
 
+/**
+ * Renderiza la cuadrícula de canciones agrupadas por momentos litúrgicos o categorías.
+ */
 function renderGrid(songs) {
   const gridEl = document.getElementById("songGrid");
   gridEl.innerHTML = "";
@@ -35,6 +47,7 @@ function renderGrid(songs) {
     return;
   }
 
+  // Agrupar canciones por su momento principal
   const agrupadas = songs.reduce((acc, song) => {
     let momentoRaw = song.momento || "Otros";
     let momentoPrincipal = momentoRaw.split(/[/,]/)[0].trim();
@@ -47,11 +60,12 @@ function renderGrid(songs) {
   }, {});
 
   const ordenMomentos = [
-    "Entrada", "Piedad", "Gloria", "Salmo", "Aclamación","Aleluya", 
+    "Entrada", "Piedad", "Gloria", "Salmo", "Aclamación", "Aleluya", 
     "Ofertorio", "Santo", "Paz", "Cordero", "Comunión", 
     "Salida", "Alabanza", "Otros"
   ];
 
+  // Ordenar los momentos según la jerarquía litúrgica establecida
   const momentosPresentes = Object.keys(agrupadas).sort((a, b) => {
     let indexA = ordenMomentos.findIndex(m => a.toLowerCase().includes(m.toLowerCase()));
     let indexB = ordenMomentos.findIndex(m => b.toLowerCase().includes(m.toLowerCase()));
@@ -60,6 +74,7 @@ function renderGrid(songs) {
     return indexA - indexB;
   });
 
+  // Construir elementos visuales por cada grupo y sección
   momentosPresentes.forEach(momento => {
     const sectionHeader = document.createElement("div");
     sectionHeader.className = "section-header";
@@ -89,6 +104,9 @@ function renderGrid(songs) {
   });
 }
 
+/**
+ * Filtra dinámicamente las canciones del índice según el texto ingresado en la barra de búsqueda.
+ */
 function filtrarCanciones() {
   const query = document.getElementById("searchBox").value.toLowerCase();
   const filtradas = songsData.filter(s => 
@@ -99,10 +117,13 @@ function filtrarCanciones() {
   renderGrid(filtradas);
 }
 
+/**
+ * Carga de manera asíncrona, procesa y visualiza una canción específica en formato ChordPro.
+ */
 async function abrirCancion(fileName) {
   semitones = 0;
   document.getElementById("transposeVal").innerText = semitones;
-  actualizarEstadoOriginal(); // Actualizar color del botón al abrir
+  actualizarEstadoOriginal();
 
   try {
     const res = await fetch(`canciones/${encodeURIComponent(fileName)}`);
@@ -123,38 +144,52 @@ async function abrirCancion(fileName) {
   }
 }
 
+/**
+ * Regresa a la vista principal ocultando el visor de canciones y mostrando el índice.
+ */
 function mostrarIndice() {
   document.getElementById("songView").classList.add("hidden");
   document.getElementById("indexView").classList.remove("hidden");
   window.scrollTo(0, 0);
 }
 
+/**
+ * Cambia el tono de la canción sumando o restando semitonos y actualiza la vista.
+ */
 function cambiarTono(delta) {
   semitones += delta;
   document.getElementById("transposeVal").innerText = semitones;
-  actualizarEstadoOriginal(); // Actualizar color del botón
+  actualizarEstadoOriginal();
   render();
 }
 
+/**
+ * Restablece el tono de la canción a su valor original (0 semitonos).
+ */
 function resetTono() {
   semitones = 0;
   document.getElementById("transposeVal").innerText = semitones;
-  actualizarEstadoOriginal(); // Actualizar color del botón
+  actualizarEstadoOriginal();
   render();
 }
 
-// Función auxiliar para controlar el estado visual del botón "Original"
+/**
+ * Controla el estado visual del botón "Original" (se ilumina si semitonos es 0).
+ */
 function actualizarEstadoOriginal() {
   const btnOriginal = document.querySelector('.btn-reset');
   if (btnOriginal) {
     if (semitones === 0) {
-      btnOriginal.classList.add('is-original'); // Se ilumina de azul
+      btnOriginal.classList.add('is-original');
     } else {
-      btnOriginal.classList.remove('is-original'); // Se queda en gris
+      btnOriginal.classList.remove('is-original');
     }
   }
 }
 
+/**
+ * Cambia el instrumento activo actual (guitarra o ukelele) y vuelve a renderizar la vista.
+ */
 function cambiarInstrumento(nuevoInstrumento) {
   if (window.appConfig) {
     window.appConfig.instrument = nuevoInstrumento;
@@ -162,6 +197,9 @@ function cambiarInstrumento(nuevoInstrumento) {
   }
 }
 
+/**
+ * Genera y pinta el HTML completo de la letra, estructura, acordes y el footer de la canción.
+ */
 function render() {
   if (!songMetadata.title) return;
 
@@ -182,6 +220,7 @@ function render() {
 
   html += `<hr style="border:0; border-top:1px solid #e2e8f0; margin: 12px 0 16px 0;">`;
 
+  // Iterar por cada párrafo y línea para construir la estructura de acordes y letras
   songMetadata.paragraphs.forEach(para => {
     let isChorus = para.type === "chorus";
 
@@ -221,8 +260,44 @@ function render() {
     html += `<div style="height: 12px;"></div>`;
   });
 
+  // Inyección automática del footer con los diagramas de acordes únicos de la canción
+  let footerAcordesHtml = renderizarFooterAcordes(songMetadata, semitones, originalKey);
+  html += footerAcordesHtml;
+
   document.getElementById("songContent").innerHTML = html;
 }
 
-// Inicializar al cargar la página
-inicializarCancionero();
+// ============================================================================
+// GESTIÓN DE EVENTOS TÁCTILES Y MÓVILES (POPOVER)
+// ============================================================================
+
+/**
+ * Configura un listener global de clics para abrir diagramas al tocar un acorde 
+ * en dispositivos táctiles y cerrarlos al hacer clic en cualquier área externa.
+ */
+function initChordTouchEvents() {
+  document.addEventListener('click', (event) => {
+    const chordTrigger = event.target.closest('.chord-trigger');
+
+    if (chordTrigger) {
+      event.stopPropagation();
+      cerrarTodosLosDiagramas();
+
+      const popover = chordTrigger.querySelector('.chord-popover');
+      if (popover) {
+        popover.classList.toggle('active');
+      }
+    } else {
+      cerrarTodosLosDiagramas();
+    }
+  });
+}
+
+/**
+ * Oculta y desactiva todos los diagramas flotantes activos en la vista actual.
+ */
+function cerrarTodosLosDiagramas() {
+  document.querySelectorAll('.chord-popover.active').forEach(popover => {
+    popover.classList.remove('active');
+  });
+}

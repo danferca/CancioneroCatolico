@@ -6,7 +6,7 @@
 CPAN
 Makefile
 blib/
-*.cho
+#*.cho
 *.pdf
 x.*
 Misc
