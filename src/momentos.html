@@ -11,85 +11,99 @@
     
     <!-- Encabezado de la página de momentos litúrgicos -->
     <header class="app-header">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <!-- Botón de navegación para regresar al índice general -->
-        <a href="index.html" class="btn-back" style="text-decoration: none; display: inline-flex; align-items: center;">← Volver al Índice General</a>
+      <div style="margin-bottom: 16px;">
+        <!-- Botón para regresar al índice general -->
+        <a href="index.html" class="btn-back">← Volver al Índice General</a>
       </div>
       <h1>⛪ Momentos Litúrgicos</h1>
       <p>Selecciona una parte de la Misa para ir a sus canciones</p>
     </header>
 
-    <!-- Rejilla de tarjetas para cada momento de la Eucaristía -->
-    <div class="momentos-menu-grid">
-      
-      <!-- Momento: Entrada -->
-      <a href="index.html#momento-entrada" class="momento-card">
-        <span class="momento-icon">🚪</span>
-        <span class="momento-title">ENTRADA</span>
-      </a>
-
-      <!-- Momento: Piedad -->
-      <a href="index.html#momento-piedad" class="momento-card">
-        <span class="momento-icon">🙏</span>
-        <span class="momento-title">PIEDAD / SEÑOR TEN PIEDAD</span>
-      </a>
-
-      <!-- Momento: Gloria -->
-      <a href="index.html#momento-gloria" class="momento-card">
-        <span class="momento-icon">✨</span>
-        <span class="momento-title">GLORIA</span>
-      </a>
-
-      <!-- Momento: Aleluya / Aclamación -->
-      <a href="index.html#momento-aleluia" class="momento-card">
-        <span class="momento-icon">📖</span>
-        <span class="momento-title">ALELUYA / ACLAMACIÓN</span>
-      </a>
-
-      <!-- Momento: Ofertorio / Presentación de dones -->
-      <a href="index.html#momento-ofertorio" class="momento-card">
-        <span class="momento-icon">🍞</span>
-        <span class="momento-title">OFERTORIO / PRESENTACIÓN</span>
-      </a>
-
-      <!-- Momento: Santo -->
-      <a href="index.html#momento-santo" class="momento-card">
-        <span class="momento-icon">☁️</span>
-        <span class="momento-title">SANTO</span>
-      </a>
-
-      <!-- Momento: Padre Nuestro -->
-      <a href="index.html#momento-padrenuestro" class="momento-card">
-        <span class="momento-icon">🕊️</span>
-        <span class="momento-title">PADRE NUESTRO</span>
-      </a>
-
-      <!-- Momento: Paz y Cordero -->
-      <a href="index.html#momento-paz" class="momento-card">
-        <span class="momento-icon">🤝</span>
-        <span class="momento-title">PAZ / CORDERO</span>
-      </a>
-
-      <!-- Momento: Comunión -->
-      <a href="index.html#momento-comunion" class="momento-card">
-        <span class="momento-icon">🍷</span>
-        <span class="momento-title">COMUNIÓN</span>
-      </a>
-
-      <!-- Momento: Salida / Final -->
-      <a href="index.html#momento-salida" class="momento-card">
-        <span class="momento-icon">🚶</span>
-        <span class="momento-title">SALIDA / FINAL</span>
-      </a>
-
-      <!-- Momento: Canciones a María -->
-      <a href="index.html#momento-maria" class="momento-card">
-        <span class="momento-icon">🌹</span>
-        <span class="momento-title">CANCIONES A MARÍA</span>
-      </a>
-
+    <!-- Contenedor donde se generarán dinámicamente las tarjetas de momentos principales -->
+    <div id="momentosGrid" class="momentos-menu-grid">
+      <!-- Generado por JavaScript desde songs.json -->
     </div>
 
   </div>
+
+  <!-- Script para leer songs.json, extraer solo el primer momento y pintar los botones -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch("songs.json");
+        if (!res.ok) throw new Error("No se pudo cargar songs.json");
+        
+        const songs = await res.json();
+        const gridEl = document.getElementById("momentosGrid");
+        gridEl.innerHTML = "";
+
+        // Usar un Set para almacenar únicamente el momento principal de cada canción
+        const momentosSet = new Set();
+        songs.forEach(song => {
+          if (song.momento) {
+            // Toma exclusivamente la primera parte antes de la barra o coma (ej: "Entrada / Alabanza" -> "Entrada")
+            let momentoPrincipal = song.momento.split(/[/,]/)[0].trim();
+            if (momentoPrincipal) {
+              momentosSet.add(momentoPrincipal);
+            }
+          }
+        });
+
+        // Jerarquía litúrgica para ordenar los botones de forma lógica
+        const ordenMomentos = [
+          "Entrada", "Piedad", "Gloria", "Salmo", "Aclamación", "Aleluya", 
+          "Ofertorio", "Santo", "Paz", "Cordero", "Comunión", 
+          "Salida", "Alabanza", "María", "Otros"
+        ];
+
+        // Ordenar los momentos según la jerarquía establecida
+        const momentosOrdenados = Array.from(momentosSet).sort((a, b) => {
+          let indexA = ordenMomentos.findIndex(m => a.toLowerCase().includes(m.toLowerCase()));
+          let indexB = ordenMomentos.findIndex(m => b.toLowerCase().includes(m.toLowerCase()));
+          if (indexA === -1) indexA = 99;
+          if (indexB === -1) indexB = 99;
+          return indexA - indexB;
+        });
+
+        // Iconos sugeridos para cada momento litúrgico principal
+        const iconos = {
+          "Entrada": "🚪",
+          "Piedad": "🙏",
+          "Gloria": "✨",
+          "Aleluya": "📖",
+          "Aclamación": "📖",
+          "Ofertorio": "🍞",
+          "Santo": "☁️",
+          "Paz": "🤝",
+          "Cordero": "🕊️",
+          "Comunión": "🍷",
+          "Salida": "🚶",
+          "Alabanza": "🎸",
+          "María": "🌹"
+        };
+
+        // Pintar cada tarjeta de momento en la rejilla
+        momentosOrdenados.forEach(momento => {
+          const idSeccion = 'momento-' + momento.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, '-');
+          const icono = iconos[momento] || "📌";
+
+          const card = document.createElement("a");
+          card.href = `index.html#${idSeccion}`;
+          card.className = "momento-card";
+          
+          card.innerHTML = `
+            <span class="momento-icon">${icono}</span>
+            <span class="momento-title">${momento.toUpperCase()}</span>
+          `;
+
+          gridEl.appendChild(card);
+        });
+
+      } catch (e) {
+        console.error("Error cargando los momentos:", e);
+        document.getElementById("momentosGrid").innerHTML = "<p>Error al cargar los momentos litúrgicos.</p>";
+      }
+    });
+  </script>
 </body>
 </html>
