@@ -216,21 +216,23 @@ body {
 }
 
 /* ============================================================================
-   5. VISOR DE CANCIÓN Y ACORDES CHORDPRO (TAMAÑO Y LÍNEA EQUILIBRADA)
+   5. VISOR DE CANCIÓN Y ACORDES CHORDPRO (ESPACIADO IZQUIERDO AMPLIADO)
    ============================================================================ */
 .song-card {
   background: var(--card-bg);
-  padding: 24px 16px;
+  padding: 24px 16px 24px 40px;       /* 40px a la izquierda para que los tooltips queden cómodos */
   border-radius: 10px;
   border: 1px solid var(--border);
   box-shadow: 0 2px 4px rgba(0,0,0,0.03);
   font-family: monospace;
   font-size: 15px;
   line-height: 1.5;
-  overflow-x: auto;                  /* Habilita el scroll horizontal fluido */
+  overflow-x: auto;                  
+  overflow-y: visible !important;    
   -webkit-overflow-scrolling: touch;
   width: 100%;
   box-sizing: border-box;
+  position: relative;                
 }
 
 /* Renglón continuo de la canción (prohibido saltar de línea) */
@@ -252,14 +254,14 @@ body {
   white-space: pre;                  
 }
 
-/* ETIQUETA DEL ACORDE (Ajustada para que tenga el tamaño ideal) */
+/* ETIQUETA DEL ACORDE */
 .chord {
   position: relative;
   display: block;
   cursor: pointer;
   color: var(--chord) !important;
   font-weight: bold;
-  font-size: 0.95em;                 /* Letra del acorde más legible y proporcionada */
+  font-size: 0.95em;                 
   line-height: 1.2;
   margin-bottom: 2px;                
   white-space: nowrap;
@@ -280,21 +282,15 @@ body {
   margin-left: 4px; 
 }
 
-.chorus { 
-  border-left: 3px solid var(--primary); 
-  padding-left: 12px; 
-  margin-left: 4px; 
-}
-
 /* ============================================================================
-   6. TOOLTIP CON DIAGRAMA DEL INSTRUMENTO
+   6. TOOLTIP CON DIAGRAMA DEL INSTRUMENTO (POSICIONAMIENTO SEGURO)
    ============================================================================ */
 .chord-tooltip {
   display: none;
   position: absolute;
   bottom: 140%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;                           /* Alineado a la izquierda del acorde para evitar cortes */
+  transform: translateX(-15%);       /* Desplazamiento sutil para centrarlo visualmente sin salir del margen */
   background: #ffffff;
   border: 1px solid var(--border);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
