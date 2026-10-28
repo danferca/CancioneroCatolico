@@ -9,23 +9,21 @@
 <body>
   <div class="container">
     
-    <!-- VISTA 1: ÍNDICE DE CANCIONES -->
+    <!-- Vista del Índice -->
     <div id="indexView" class="view">
       <header class="app-header">
         <h1>🎵 Índice de Canciones ChordPro</h1>
         <p>Cancionero para Eucaristías y Tiempos Litúrgicos</p>
       </header>
-
       <div class="search-container">
         <input type="text" id="searchBox" placeholder="🔍 Buscar por título, autor o momento litúrgico..." oninput="filtrarCanciones()">
       </div>
-
       <div id="songGrid" class="song-grid">
-        <!-- Tarjetas dinámicas -->
+        <!-- Las tarjetas se generan dinámicamente aquí -->
       </div>
     </div>
-
-    <!-- VISTA 2: VISUALIZADOR DE CANCIÓN -->
+    
+    <!-- Vista de la Canción (Detalle) -->
     <div id="songView" class="view hidden">
       <div class="top-nav">
         <button class="btn-back" onclick="mostrarIndice()">← Volver al Índice</button>
@@ -33,12 +31,11 @@
         <!-- Selector de Instrumento -->
         <div class="instrument-selector">
           <strong>Instrumento:</strong>
-          <select id="instrumentSelect" onchange="cambiarInstrumento(this.value)">
+          <select id="instrumentSelect" onchange="cambiarInstrumento(this.value)" inputmode="none">
             <option value="guitar">Guitarra</option>
             <option value="ukulele">Ukelele</option>
           </select>
         </div>
-
         <div class="transpose-controls">
           <button onclick="cambiarTono(-1)">-</button>
             <span id="transposeVal">0</span>
@@ -46,12 +43,10 @@
           <button class="btn-reset" onclick="resetTono()">Original</button>
         </div>
       </div>
-
       <div id="songContent" class="song-card">
-        <!-- Contenido de la canción -->
+        <!-- El contenido de la canción se renderiza aquí -->
       </div>
     </div>
-
   </div>
   <script src="js/chords-db.js"></script>
   <script src="js/config.js"></script>
@@ -59,6 +54,5 @@
   <script src="js/ui.js"></script>
   <script src="js/footer-chords.js"></script>  
   
-
 </body>
 </html>

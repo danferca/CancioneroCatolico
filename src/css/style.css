@@ -147,7 +147,7 @@ body {
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  margin-bottom: 16px;
+  margin-bottom: 4px;                 /* Margen inferior reducido al mínimo */
   gap: 12px;
   flex-wrap: wrap;
 }
@@ -170,7 +170,6 @@ body {
   background: #cbd5e1;
 }
 
-/* Grupo de controles de transposición */
 .transpose-controls {
   display: flex;
   align-items: center;
@@ -178,7 +177,6 @@ body {
   flex-shrink: 0;
 }
 
-/* ÚNICAMENTE los botones + y - quedan perfectamente cuadrados */
 .transpose-controls button:not(.btn-reset) {
   background: var(--primary);
   color: #fff;
@@ -186,8 +184,8 @@ body {
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  width: 32px !important;            /* Ancho fijo de 32px */
-  height: 32px !important;           /* Alto fijo de 32px */
+  width: 32px !important;
+  height: 32px !important;
   padding: 0 !important;
   font-size: 15px;
   display: inline-flex;
@@ -205,7 +203,6 @@ body {
   font-size: 13px;
 }
 
-/* Botón "Original" con ancho dinámico para su texto y margen de separación */
 .btn-reset {
   background: #64748b !important;
   color: #fff !important;
@@ -213,12 +210,12 @@ body {
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  width: auto !important;            /* Permite adaptarse al tamaño de la palabra "Original" */
+  width: auto !important;
   min-width: max-content;
   height: 32px !important;
-  padding: 0 14px !important;        /* Espacio interno a los lados */
+  padding: 0 14px !important;
   font-size: 13px;
-  margin-left: 12px !important;      /* Separación limpia respecto a los botones + y - */
+  margin-left: 12px !important;
   white-space: nowrap !important;
   display: inline-flex;
   align-items: center;
@@ -231,16 +228,12 @@ body {
   background: var(--primary) !important;
 }
 
-.btn-reset.is-original {
-  background: var(--primary) !important;
-}
-
 /* ============================================================================
    5. VISOR DE CANCIÓN Y ACORDES CHORDPRO
    ============================================================================ */
 .song-card {
   background: var(--card-bg);
-  padding: 24px 16px 24px 40px;
+  padding: 8px 16px 24px 40px;        /* Padding superior reducido a 8px para acercarlo */
   border-radius: 10px;
   border: 1px solid var(--border);
   box-shadow: 0 2px 4px rgba(0,0,0,0.03);
@@ -346,7 +339,7 @@ body {
    ============================================================================ */
 @media (max-width: 600px) {
   .song-card {
-    padding: 16px 12px;
+    padding: 8px 12px 20px 16px;
     font-size: 14px;
   }
 

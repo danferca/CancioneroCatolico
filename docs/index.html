@@ -23,6 +23,7 @@
       </div>
     </div>
     
+    
     <div id="songView" class="view hidden">
       <div class="top-nav">
         <button class="btn-back" onclick="mostrarIndice()">← Volver al Índice</button>
@@ -30,7 +31,7 @@
         
         <div class="instrument-selector">
           <strong>Instrumento:</strong>
-          <select id="instrumentSelect" onchange="cambiarInstrumento(this.value)">
+          <select id="instrumentSelect" onchange="cambiarInstrumento(this.value)" inputmode="none">
             <option value="guitar">Guitarra</option>
             <option value="ukulele">Ukelele</option>
           </select>
