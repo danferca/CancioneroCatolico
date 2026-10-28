@@ -29,6 +29,9 @@ async function inicializarCancionero() {
     songsData = await res.json();
     songsData.sort((a, b) => a.title.localeCompare(b.title));
     renderGrid(songsData);
+
+    // Una vez renderizado el índice, verificamos si se abrió con un ancla de momento litúrgico
+    manejarScrollMomento();
   } catch (e) {
     document.getElementById("songGrid").innerText = "Error al cargar el índice o la configuración.";
     console.error(e);
@@ -36,14 +39,19 @@ async function inicializarCancionero() {
 }
 
 /**
- * Renderiza la cuadrícula de canciones agrupadas por momentos litúrgicos o categorías.
+ * Renderiza la cuadrícula de canciones agrupadas por momentos litúrgicos usando DOM nativo.
  */
 function renderGrid(songs) {
   const gridEl = document.getElementById("songGrid");
   gridEl.innerHTML = "";
 
   if (songs.length === 0) {
-    gridEl.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: #64748b;'>No se encontraron canciones.</p>";
+    const emptyMsg = document.createElement("p");
+    emptyMsg.style.gridColumn = "1/-1";
+    emptyMsg.style.textAlign = "center";
+    emptyMsg.style.color = "#64748b";
+    emptyMsg.innerText = "No se encontraron canciones.";
+    gridEl.appendChild(emptyMsg);
     return;
   }
 
@@ -74,13 +82,37 @@ function renderGrid(songs) {
     return indexA - indexB;
   });
 
-  // Construir elementos visuales por cada grupo y sección
+  // Construir elementos visuales por cada grupo y sección usando DOM puro
   momentosPresentes.forEach(momento => {
+    // Generar un ID limpio idéntico al que usa momentos.html (ej: "momento-entrada")
+    const idSeccion = 'momento-' + momento.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, '-');
+
+    // 1. Crear el contenedor de la cabecera de la sección
     const sectionHeader = document.createElement("div");
+    sectionHeader.id = idSeccion;
     sectionHeader.className = "section-header";
-    sectionHeader.innerHTML = `<h3>📌 ${momento.toUpperCase()}</h3>`;
+    sectionHeader.style.display = "flex";
+    sectionHeader.style.justifyContent = "space-between";
+    sectionHeader.style.alignItems = "center";
+
+    // Título de la sección
+    const h3 = document.createElement("h3");
+    h3.innerText = `📌 ${momento.toUpperCase()}`;
+    sectionHeader.appendChild(h3);
+
+    // Enlace rápido para volver al menú de momentos desde cualquier sección
+    const linkMenu = document.createElement("a");
+    linkMenu.href = "momentos.html";
+    linkMenu.innerText = "⛪ Menú Momentos";
+    linkMenu.style.fontSize = "13px";
+    linkMenu.style.color = "var(--primary)";
+    linkMenu.style.textDecoration = "none";
+    linkMenu.style.fontWeight = "600";
+    sectionHeader.appendChild(linkMenu);
+
     gridEl.appendChild(sectionHeader);
 
+    // 2. Crear el contenedor de las tarjetas de canciones del grupo
     const groupContainer = document.createElement("div");
     groupContainer.className = "momento-group";
 
@@ -88,13 +120,24 @@ function renderGrid(songs) {
       const card = document.createElement("div");
       card.className = "song-item";
 
-      card.innerHTML = `
-        <div class="song-info">
-          <h3>${song.title}</h3>
-          <p>${song.artist}</p>
-        </div>
-        <div class="key-badge">${song.key}</div>
-      `;
+      const infoDiv = document.createElement("div");
+      infoDiv.className = "song-info";
+      
+      const songTitle = document.createElement("h3");
+      songTitle.innerText = song.title;
+      
+      const songArtist = document.createElement("p");
+      songArtist.innerText = song.artist;
+      
+      infoDiv.appendChild(songTitle);
+      infoDiv.appendChild(songArtist);
+
+      const keyBadge = document.createElement("div");
+      keyBadge.className = "key-badge";
+      keyBadge.innerText = song.key;
+
+      card.appendChild(infoDiv);
+      card.appendChild(keyBadge);
 
       card.onclick = () => abrirCancion(song.file);
       groupContainer.appendChild(card);
@@ -103,6 +146,24 @@ function renderGrid(songs) {
     gridEl.appendChild(groupContainer);
   });
 }
+
+/**
+ * Desplaza la pantalla suavemente hacia el momento litúrgico si la URL contiene un hash (ej: #momento-entrada)
+ */
+function manejarScrollMomento() {
+  if (window.location.hash) {
+    const id = window.location.hash;
+    setTimeout(() => {
+      const elemento = document.querySelector(id);
+      if (elemento) {
+        elemento.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 150); // Pequeña pausa para garantizar que el DOM esté completamente listo
+  }
+}
+
+// Escuchar cambios en el hash por si navegan directamente estando ya en la página
+window.addEventListener('hashchange', manejarScrollMomento);
 
 /**
  * Filtra dinámicamente las canciones del índice según el texto ingresado en la barra de búsqueda.
